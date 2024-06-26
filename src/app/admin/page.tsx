@@ -19,9 +19,9 @@ export default function AdminDashboard() {
 
   const checkUser = async () => {
     const {data: {user}} = await client.auth.getUser()
-    const timer = setTimeout(() => setProgress(100), 700)
+    const timer = setTimeout(() => setProgress(100), 500)
     if (user) {
-      setTimeout(() => router.push("/dashboard"), 900)
+      setTimeout(() => router.push("/dashboard"), 600)
     }
     setTimeout(() => setLoading(false), 1000)
   }
@@ -48,7 +48,8 @@ export default function AdminDashboard() {
     }
     else {
       toast({
-        description: "Successfully Logged In"
+        description: "Successfully Logged In",
+        variant: "success"
       })
       router.push("/dashboard")
     }
