@@ -21,20 +21,15 @@ const mySortFn: SortingFn<Item> = (rowA, rowB) => {
   const item1 = rowA.original;
   const item2 = rowB.original;
 
-  // Calculate whether the quantity is below the minimum stock level
-  // const isBelowMinStock1 = item1.quantity < item1.min_stock;
-  // const isBelowMinStock2 = item2.quantity < item2.min_stock;
+  const minStock1 = item1.quantity < item1.min_stock
+  const minStock2 = item2.quantity < item2.min_stock
+  if (minStock1 && !minStock2)
+    return -1
+  else if (!minStock1 && minStock2)
+    return 1
+  else
+    return (item1.quantity - item2.quantity)// Sort by quantity ascending
 
-  // // Compare based on whether both items are below min stock
-  // if (isBelowMinStock1 && isBelowMinStock2) {
-  //   return item1.quantity - item2.quantity; // Sort by quantity ascending
-  // } else if (isBelowMinStock1) {
-  //   return -1; // item1 should come before item2
-  // } else if (isBelowMinStock2) {
-  //   return 1; // item2 should come before item1
-  // } else {
-  // }
-  return (item1.quantity - item2.quantity)// Sort by quantity ascending
 }
 
 export const columns: ColumnDef<Item>[] = [
@@ -51,7 +46,7 @@ export const columns: ColumnDef<Item>[] = [
         <p className={(item.quantity < item.min_stock) ? "text-[red]" : "text-foreground"}>{item.quantity}</p>
       )
     },
-    sortingFn: mySortFn
+    sortingFn: mySortFn,
   },
   {
     accessorKey: "description",

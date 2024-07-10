@@ -89,7 +89,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="sidebar mx-20 mt-24 h-[200px] w-[300px] bg-[yellowgreen]">
+      <div className="sidebar hidden mx-20 mt-24 h-[200px] w-[300px] bg-[yellowgreen]">
         <p className="p-2"></p>
       </div>
 

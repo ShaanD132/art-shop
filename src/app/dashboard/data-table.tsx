@@ -28,16 +28,25 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([])
+  const [sorting, setSorting] = useState<SortingState>([{id: "quantity", desc: false}])
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
+    sortingFns: {
+      mySortFn: (rowA, rowB, columnId) => {
+        const item1 = rowA.original;
+        const item2 = rowB.original;
+        return (item1.quantity - item2.quantity) // Sort by quantity ascending
+      }
+    },
     state: {
       sorting,
     },
   })
+  // onClick={header.column.getToggleSortingHandler()}
 
   return (
     <div className="rounded-md border">
@@ -50,10 +59,12 @@ export function DataTable<TData, TValue>({
                   <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                      :
+                      <div>
+                        {flexRender(header.column.columnDef.header,
+                                  header.getContext())}
+                      </div>
+                    }
                   </TableHead>
                 )
               })}

@@ -80,3 +80,7 @@
   top: 0;
   left: 0;
 }
+
+.main-image-grid img {
+  height: 200px;
+}
